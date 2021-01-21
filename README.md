@@ -3,6 +3,8 @@
 - PostCSS 8.0.0
 - postcss-load-config 3.0.0
 
+## Warning! Autoprefixer >10 doesn't work with Meteor 2.0 for now, use Autoprefixer 9.8.6 
+
 From version 2.0.0 it uses [postcss-load-config](https://github.com/michael-ciniawsky/postcss-load-config). Thanks to [@mitar](https://github.com/mitar). For more info check: [#32](https://github.com/juliancwirko/meteor-postcss/pull/32).
 
 ## Use PostCSS with Meteor - Package
