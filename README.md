@@ -1,5 +1,7 @@
-
-#### Important! Package is no longer actively maintained. I am not sure if it will work with newest Meteor versions. If you think you can keep it in good shape, let me know. I'll pass it to you. Thanks.
+## PostCSS for Meteor 2.0
+- Source-map@0.8-beta.0
+- PostCSS 8.0.0
+- postcss-load-config 3.0.0
 
 From version 2.0.0 it uses [postcss-load-config](https://github.com/michael-ciniawsky/postcss-load-config). Thanks to [@mitar](https://github.com/mitar). For more info check: [#32](https://github.com/juliancwirko/meteor-postcss/pull/32).
 
@@ -33,10 +35,10 @@ Read more below...
 $ meteor remove standard-minifier-css
 ```
 
-#### 2. Add `juliancwirko:postcss` package
+#### 2. Add `appigram:postcss` package
 
 ```
-$ meteor add juliancwirko:postcss
+$ meteor add appigram:postcss
 ```
 
 #### 3. Add peer NPM dependencies
@@ -233,9 +235,9 @@ For now everything is configured in one `package.json` file (read above) which i
 
 Remember to move your all configuration entries from `packages.json` and `postcss.json` to `package.json` according the 'Usage' section of this docs.
 
-**Remove the package by `meteor remove juliancwirko:postcss` and add it again `meteor add juliancwirko:postcss@1.0.0`** it should install current version.
+**Remove the package by `meteor remove appigram:postcss` and add it again `meteor add appigram:postcss@1.0.0`** it should install current version.
 
-Make sure that you have standard-minifier-js package installed, if not add it by `meteor add standard-minifier-js`. Also make sure that you don't have standard-minifier**s**-js package (there was a name change). In Meteor 1.3 there are 2 separate packages for css and js minifiers and the css one is included in juliancwirko:postcss. Previously there was also js minifier. Now it is removed so you need to add it by hand.
+Make sure that you have standard-minifier-js package installed, if not add it by `meteor add standard-minifier-js`. Also make sure that you don't have standard-minifier**s**-js package (there was a name change). In Meteor 1.3 there are 2 separate packages for css and js minifiers and the css one is included in appigram:postcss. Previously there was also js minifier. Now it is removed so you need to add it by hand.
 
 ### License
 
@@ -248,6 +250,7 @@ MIT
 
 ### Changelog
 
+- v3.0.0 Meteor 2.0 support. Upgrade to PostCSS 8, postcss-load-config 3.0 and Source-map 0.8
 - v2.0.3 Restoring the use of app-module-path
 - v2.0.2 Moved to use peer NPM dependencies
 - v2.0.1 Bumping PostCSS to 6.0.22

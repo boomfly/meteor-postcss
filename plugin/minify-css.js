@@ -9,12 +9,12 @@ import Future from 'fibers/future';
 var sourcemap = Npm.require('source-map');
 
 checkNpmVersions({
-  'postcss': '^6.0.22',
-  'postcss-load-config': '^1.2.0'
-}, 'juliancwirko:postcss');
+  'postcss': '^8.2.4',
+  'postcss-load-config': '^3.0.0'
+}, 'appigram:postcss');
 
 var postCSS = require('postcss');
-var load = require('postcss-load-config');
+var postCSSRC = require('postcss-load-config');
 
 // Not used, but available.
 var fs = Plugin.fs;
@@ -38,7 +38,7 @@ var loadPostcssConfig = function () {
 
         var config;
         try {
-            config = Promise.await(load({meteor: true}));
+            config = Promise.await(postCSSRC({meteor: true}));
             postcssConfigPlugins = config.plugins || [];
             postcssConfigParser = config.options.parser || null;
             postcssConfigExcludedPackages = config.options.excludedPackages || [];
@@ -99,7 +99,12 @@ CssToolsMinifier.prototype.processFilesForBundle = function (files, options) {
         return;
     }
 
-    var minifiedFiles = CssTools.minifyCss(merged.code);
+    try {
+        var minifiedFiles = CssTools.minifyCss(merged.code);
+    } catch (err) {
+        console.error('Error while processing style sheet: ', err)
+        throw err
+    }
 
     if (files.length) {
         minifiedFiles.forEach(function (minified) {
@@ -233,7 +238,7 @@ var mergeCss = function (css) {
     // If any input files had source maps, apply them.
     // Ex.: less -> css source map should be composed with css -> css source map
     var newMap = sourcemap.SourceMapGenerator.fromSourceMap(
-        new sourcemap.SourceMapConsumer(stringifiedCss.map));
+        Promise.await(new sourcemap.SourceMapConsumer(stringifiedCss.map)));
 
     Object.keys(originals).forEach(function (name) {
         var file = originals[name];
@@ -241,8 +246,10 @@ var mergeCss = function (css) {
             return;
         try {
             newMap.applySourceMap(
-                new sourcemap.SourceMapConsumer(file.getSourceMap()), name);
+                Promise.await(new sourcemap.SourceMapConsumer(file.getSourceMap()), name));
         } catch (err) {
+          console.log('Apply source Map error: ')
+          console.log(err)
             // If we can't apply the source map, silently drop it.
             //
             // XXX This is here because there are some less files that
