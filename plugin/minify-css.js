@@ -138,9 +138,15 @@ var mergeCss = function (css) {
             isFileForPostCSS = false;
         }
 
+        var filepath = file._source.url;
+        // Visualizer pass null _source.url, check it first
+        if (filepath) {
+          filepath = filepath.replace('/__cordova', '')
+        }
+
         postCSS(isFileForPostCSS ? postcssConfigPlugins : [])
             .process(file.getContentsAsString(), {
-                from: process.cwd() + file._source.url.replace('/__cordova', ''),
+                from: process.cwd() + filepath,
                 parser: postcssConfigParser
             })
             .then(function (result) {
