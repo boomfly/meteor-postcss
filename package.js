@@ -10,6 +10,7 @@ Package.registerBuildPlugin({
   use: [
     'ecmascript',
     'minifier-css',
+    'underscore',
     'tmeasday:check-npm-versions'
   ],
   npmDependencies: {
